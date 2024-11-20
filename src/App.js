@@ -7,7 +7,7 @@ import Clothing from './pages/Clothing';
 
 function App() {
   return (
-    <div className="App bg-teal-900">
+    <div className="App">
       <BrowserRouter>
         <Routes>
             <Route path='/' element={<Homepage />} />

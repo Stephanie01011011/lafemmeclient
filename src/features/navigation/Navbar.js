@@ -5,10 +5,13 @@ import Cookies from 'universal-cookie';
 
 function Navbar() {
   let [login, setLogin] = useState("");
+  let [color, setColor] = useState("text-teal-900 bg-teal");
+  let [nav, setNav] = useState("");
   let [user, setUser] = useState(null);
   let token = useSelector((state) => state.token.token);
   const cookies = new Cookies();
 
+  
   const logging_in = (jwt_token) => {
     // const decoded = jwt(jwt_token);
     // setUser(decoded);
@@ -32,6 +35,16 @@ function Navbar() {
   }
 
   useEffect(() => {
+    
+    if(window.location.pathname == "/"){
+      setColor("text-white");
+      setNav("navbar fixed top-0 left-0 right-0");
+      
+    } else {
+      setColor("text-teal-900");
+      setNav("navbar");
+    }
+
     if (token.payload == undefined){
       setLogin("Log In")
       
@@ -47,7 +60,9 @@ function Navbar() {
   }, [token]);
  
   return (
-    <div className='navbar fixed top-0 left-0 right-0'>
+    
+    <div className={nav}>
+      <div className={color}>
       <nav className="bg-800">
   <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
     <div className="relative flex h-16 items-center justify-between">
@@ -56,8 +71,8 @@ function Navbar() {
         <div className="hidden sm:ml-6 sm:block">
           <div className="flex space-x-4">
           
-            <a href="/clothing" className="rounded-md px-3 py-2 text-sm font-light text-white hover:underline hover:underline-offset-4" aria-current="page">Clothing</a>
-            <a href="#" className="rounded-md px-3 py-2 text-sm font-light text-white hover:underline hover:underline-offset-4">Beauty</a>
+            <a href="/clothing" className="rounded-md px-3 py-2 text-sm font-light hover:underline hover:underline-offset-4" aria-current="page">Clothing</a>
+            <a href="#" className="rounded-md px-3 py-2 text-sm font-light hover:underline hover:underline-offset-4">Beauty</a>
            
           </div>
         </div>
@@ -67,7 +82,7 @@ function Navbar() {
         <div className="hidden sm:ml-6 sm:block">
           <div className="flex space-x-4">
           
-            <a href="/" className="title px-3 py-2 text-7xl font-medium text-white" aria-current="page">La Femme</a>
+            <a href="/" className="title px-3 py-2 text-7xl font-medium" aria-current="page">La Femme</a>
           
            
           </div>
@@ -77,9 +92,9 @@ function Navbar() {
     
 
       <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-      <a href="#" className="rounded-md px-3 py-2 text-sm font-light text-white hover:underline hover:underline-offset-4">About LaFemme</a>
-      <a href={login == "Log Out" ? "/" : "/login"} className="rounded-md px-3 py-2 text-sm font-light text-white hover:underline hover:underline-offset-4" onClick={logging_in}>{login}</a>
-      <a href="#" className="rounded-md px-3 py-2 text-sm font-light text-white hover:underline hover:underline-offset-4">Cart(0)</a>
+      <a href="#" className="rounded-md px-3 py-2 text-sm font-light hover:underline hover:underline-offset-4">About LaFemme</a>
+      <a href={login == "Log Out" ? "/" : "/login"} className="rounded-md px-3 py-2 text-sm font-light hover:underline hover:underline-offset-4" onClick={logging_in}>{login}</a>
+      <a href="#" className="rounded-md px-3 py-2 text-sm font-light hover:underline hover:underline-offset-4">Cart(0)</a>
 
         
       
@@ -97,6 +112,7 @@ function Navbar() {
     </div>
   </div>
 </nav>
+</div>
     </div>
   )
 }
