@@ -2,7 +2,7 @@ import React from 'react'
 
 function Homepage() {
   return (
-    <div>
+    <div className=''>
       
       <div className="top-section">
         
@@ -30,6 +30,24 @@ function Homepage() {
             <h2 className='text-white text-7xl title'>Dresses</h2>
             <p id='top-cta' className='hover:underline hover:underline-offset-4 text-white'>View All Dresses</p>
         </div>
+        </div>
+
+        <div className="categories-section flex flex-col justify-center items-center">
+          <div className="categories-img mt-4">
+
+          </div>
+          <div className="category-links flex justify-center items-center gap-6 text-4xl title flex-wrap absolute text-white">
+            
+            <a href=""><h2>Shirts</h2></a>
+            <a href=""><h2>Pants</h2></a>
+            <a href=""><h2>Dresses</h2></a>
+            <a href=""><h2>Bags</h2></a>
+            <a href=""><h2>Jackets</h2></a>
+            <a href=""><h2>Accessories</h2></a>
+            <a href=""><h2>Tops</h2></a>
+           
+          </div>
+          <p id='top-cta' className='hover:underline hover:underline-offset-4 text-white'>View All Dresses</p>
         </div>
      
        
