@@ -36,7 +36,7 @@ function Navbar() {
 
   useEffect(() => {
     
-    if(window.location.pathname == "/"){
+    if(window.location.pathname == "/" || window.location.pathname == "/login"){
       setColor("text-white");
       setNav("navbar fixed top-0 left-0 right-0");
       
@@ -94,7 +94,7 @@ function Navbar() {
       <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
       <a href="#" className="rounded-md px-3 py-2 text-sm font-light hover:underline hover:underline-offset-4">About LaFemme</a>
       <a href={login == "Log Out" ? "/" : "/login"} className="rounded-md px-3 py-2 text-sm font-light hover:underline hover:underline-offset-4" onClick={logging_in}>{login}</a>
-      <a href="#" className="rounded-md px-3 py-2 text-sm font-light hover:underline hover:underline-offset-4">Cart(0)</a>
+      <a href="/cart" className="rounded-md px-3 py-2 text-sm font-light hover:underline hover:underline-offset-4">Cart(0)</a>
 
         
       

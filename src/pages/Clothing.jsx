@@ -6,17 +6,20 @@ function Clothing() {
     let [items, setItems] = useState([]);
     const cookies = new Cookies();
     let token = useSelector((state) => state.token.token);
-    
+    let [url, setUrl] = useState("http://localhost:5001/Item/GetItems/0/na/na");
+    let [itemId, setItemId] = useState(0);
+    let [itemType, setItemType] = useState("na");
+    let [itemColor, setItemColor] = useState("na");
     useEffect(() => {
         let dataRes;
-        let response = fetch("http://localhost:5001/Item/GetItems/0/na/na", {
+        let response = fetch(url, {
             method: "GET",
             headers : { 'Content-type' : 'application/json', 
                 'Authorization': 'Bearer ' + cookies.get("jwt_authorization")}
         }).then((res) => res.json()).then((data) => { setItems(data)});
         
        
-    }, []);
+    }, [url]);
 
     
        
@@ -25,7 +28,10 @@ function Clothing() {
         <div className="filters mt-16 flex justify-around align-center">
             <div className="type-filter">
             <label htmlFor="type" className='title text-2xl mr-6 text-teal-900'>Type:</label>
-            <select name="type" id="">
+            <select name="type" id="" onChange={(e) => {
+                setItemType(e.target.value);
+            }}>
+                <option value="na">All</option>
                 <option value="shirt">Shirts</option>
                 <option value="pants">Pants</option>
                 <option value="dresses">Dresses</option>
@@ -36,7 +42,10 @@ function Clothing() {
             </div>
             <div className="color-filter">
             <label htmlFor="color" className='title text-2xl mr-6 text-teal-900'>Color:</label>
-            <select name="color" id="">
+            <select name="color" id="" onChange={(e) => {
+                setItemColor(e.target.value);
+            }}>
+                <option value="na">All</option>
                 <option value="red">Red</option>
                 <option value="blue">Blue</option>
                 <option value="green">Green</option>
@@ -46,7 +55,10 @@ function Clothing() {
             </select>
             </div>
             <div className="filter-btns w-52">
-                <a href="" className='button'><p className='text-white bg-teal-900 pt-3 pb-3 rounded'>Filter</p></a>
+                <a href="#" className='button' onClick={() => {
+                    setUrl("http://localhost:5001/Item/GetItems/0/" + itemType + "/" + itemColor);
+                    
+                }}><p className='text-white bg-teal-900 pt-3 pb-3 rounded'>Filter</p></a>
             </div>
         </div>
         <div className="results flex justify-center items-center gap-8 p-6 mt-16">

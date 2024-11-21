@@ -1,6 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
+import Cookies from 'universal-cookie';
+import { setUserId, setName, setEmail, setCart } from '../features/user/userSlice';
 
 function Homepage() {
+  let userId = useSelector((state) => state.user.userId);
+  console.log(userId);
+  let cookies = new Cookies();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+   
+  })
+
+  
   return (
     <div className=''>
       

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setToken } from '../features/token/tokenSlice';
 import { useNavigate } from "react-router-dom";
 import Cookies from 'universal-cookie';
+import { setUserId, setName, setEmail, setCart } from '../features/user/userSlice';
 
 
 function Login() {
@@ -11,27 +12,43 @@ function Login() {
     const [password, setPassword] = useState("");
     const [statusMsg, setStatusMsg] = useState("");
     let token = useSelector((state) => state.token.token);
+    let userId = useSelector((state) => state.user.userId);
     const dispatch = useDispatch();
-   
+   let cookies = new Cookies();
+   const [data, setData] = useState({});
     
-    const handleLogin = async () => {
+    const handleLogin = () => {
         
-        let response = await fetch("http://localhost:5001/Auth/Login", {
+        let response = fetch("http://localhost:5001/Auth/Login", {
             method: "POST",
             body: JSON.stringify({email: email, password: password}),
             headers : { 'Content-type' : 'application/json', Accept : 'application/json'}
         }).then((res) => {if (!res.ok){return res.text().then(text => { throw new Error(text) })} else {
           return res.json();
-        }}).then(data => dispatch(setToken(data.token))).catch(err => {
-          setStatusMsg(err.message);
-        })
+        }}).then(data => setData(data));
+
+        
+        dispatch(setToken(data.token));
+        dispatch(setUserId(data.userId));
+        
+        let userResponse = fetch("http://localhost:5001/User/GetUsers/" + data.userId, {
+          method: "GET",
+          headers : { 'Content-type' : 'application/json', 
+            'Authorization': 'Bearer ' + data.token,
+            Accept : 'application/json'}
+      }).then((res) => {if (!res.ok){return res.text().then(text => { throw new Error(text) })} else {
+        return res.json();
+      }}).then(data => {dispatch(setEmail(data[0].email));dispatch(setCart(data[0].cartId));dispatch(setName(data[0].firstName))})
+    
+       
+
         
     };
 
     useEffect((response) => {
       if (token.payload !== undefined){
-        console.log("token")
-        navigate('/', {replace: true});
+        
+        navigate('/');
       } else {
         
         navigate('/login', {replace: true});
